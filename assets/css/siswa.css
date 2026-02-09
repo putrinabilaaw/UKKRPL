@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* Navbar */
+.dash-navbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.dash-logo {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #2563eb;
+}
+
+.dash-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dash-user-info {
+    text-align: right;
+}
+
+.dash-name {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.dash-role {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #2563eb;
+}
+
+.dash-logout {
+    width: 40px;
+    height: 40px;
+    background: #fee2e2;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    text-decoration: none;
+}
+
+/* Content */
+.dash-content {
+    padding: 2rem 0;
+}
+
+/* Card */
+.dash-card {
+    background: #fff;
+    border-radius: 1.75rem;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+/* Form */
+.dash-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.dash-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    outline: none;
+}
+
+.dash-input:focus {
+    border-color: #2563eb;
+    background: #fff;
+}
+
+/* Button */
+.dash-btn {
+    width: 100%;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    font-weight: 800;
+}
+
+/* Card detail */
+.dash-card-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.dash-meta {
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: #3b82f6;
+    text-transform: uppercase;
+}
+
+.badge-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.55rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.badge-status.pending {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.dash-desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* Footer card */
+.dash-card-foot {
+    border-top: 1px dashed #e2e8f0;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: #94a3b8;
+}
+
+.dash-action button {
+    background: none;
+    border: none;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-left: 0.75rem;
+}
+
+.dash-action .edit {
+    color: #2563eb;
+}
+
+.dash-action .delete {
+    color: #ef4444;
+}

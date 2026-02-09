@@ -1,0 +1,15 @@
+<?php
+// Konfigurasi Database sesuai file SQL kamu
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "pengaduan";
+
+$conn = mysqli_connect($host, $user, $pass, $db);
+
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
+session_start();
+?>

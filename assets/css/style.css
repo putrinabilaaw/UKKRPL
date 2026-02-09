@@ -1,0 +1,148 @@
+/* halaman login dan logout */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Layout */
+.auth-body {
+    background: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Header */
+.logo-box {
+    width: 64px;
+    height: 64px;
+    background: #2563eb;
+    border-radius: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
+}
+
+.logo-box i {
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.auth-title {
+    font-weight: 800;
+    font-size: 1.75rem;
+    color: #1e293b;
+}
+
+.auth-subtitle {
+    font-weight: 500;
+    color: #64748b;
+}
+
+/* Card */
+.auth-card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 2rem;
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08);
+    border: 1px solid #f1f5f9;
+}
+
+.auth-card-title {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+}
+
+/* Form */
+.auth-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.25rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.auth-input:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Button */
+.auth-btn {
+    width: 100%;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 800;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    border: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.auth-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Footer */
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.auth-copy {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #94a3b8;
+}
+
+
+
+
+/* halaman siswa */
+
+
