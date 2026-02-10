@@ -10,6 +10,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
     <style>
     :root {
         --primary-blue: #2b6df2;
@@ -51,7 +55,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        /* Sejajar tengah secara vertikal */
         margin-bottom: 25px;
     }
 
@@ -66,7 +69,6 @@
         font-size: 14px;
     }
 
-    /* Container untuk menyejajarkan Ekspor dan Status */
     .header-actions {
         display: flex;
         align-items: center;
@@ -237,13 +239,20 @@
 
             <div class="header-actions">
                 <div class="dropdown">
-                    <button class="btn btn-export-main dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="fa fa-file-export me-1"></i> Ekspor
+                    <button class="btn btn-export-main dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        id="btnExportToggle">
+                        <i class="fa fa-file-export me-1"></i> <span id="exportLabel">Ekspor</span>
                     </button>
                     <ul class="dropdown-menu shadow border-0">
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-file-excel text-success me-2"></i>
-                                Excel</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-file-pdf text-danger me-2"></i> PDF</a>
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="handleExport('Excel')">
+                                <i class="fa fa-file-excel text-success me-2"></i> Excel
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="handleExport('PDF')">
+                                <i class="fa fa-file-pdf text-danger me-2"></i> PDF
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -336,11 +345,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-    // Variabel global untuk status agar bisa dikombinasikan dengan filter lain
     let activeStatus = 'Semua';
 
     function applyFilters(status, btn) {
-        // Update status aktif jika dipicu oleh tombol status
         if (status) {
             activeStatus = status;
             const buttons = document.querySelectorAll('.filter-btn');
@@ -348,9 +355,8 @@
             btn.classList.add('active');
         }
 
-        // Ambil nilai dari filter lainnya
-        const dateVal = document.getElementById('fDate').value; // Format: YYYY-MM-DD
-        const monthVal = document.getElementById('fMonth').value; // Contoh: Feb
+        const dateVal = document.getElementById('fDate').value;
+        const monthVal = document.getElementById('fMonth').value;
         const catVal = document.getElementById('fCategory').value;
         const searchVal = document.getElementById('fSearch').value.toLowerCase();
 
@@ -360,23 +366,92 @@
             const rowStatus = row.getAttribute('data-status');
             const rowDate = row.getAttribute('data-tanggal');
             const rowCat = row.getAttribute('data-kategori');
-            const rowFullText = row.innerText.toLowerCase(); // Untuk pencarian global di baris tersebut
+            const rowFullText = row.innerText.toLowerCase();
             const rowDateText = row.querySelector('.tgl-text').innerText;
 
-            // Logika Cek Multi-Filter
             const matchStatus = (activeStatus === 'Semua' || rowStatus === activeStatus);
             const matchDate = (!dateVal || rowDate === dateVal);
             const matchMonth = (!monthVal || rowDateText.includes(monthVal));
             const matchCat = (!catVal || rowCat === catVal);
             const matchSearch = (!searchVal || rowFullText.includes(searchVal));
 
-            // Tampilkan baris HANYA jika memenuhi semua kriteria
             if (matchStatus && matchDate && matchMonth && matchCat && matchSearch) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
             }
         });
+    }
+
+    // --- LOGIKA EKSPOR DINAMIS ---
+
+    function handleExport(type) {
+        // 1. Ambil elemen label (span) dan tombol (untuk mengganti ikon jika perlu)
+        const exportLabel = document.getElementById('exportLabel');
+        const exportBtn = document.getElementById('btnExportToggle');
+        const icon = exportBtn.querySelector('i');
+
+        // 2. Ubah teks label menjadi format yang dipilih
+        exportLabel.innerText = type;
+
+        // 3. (Opsional) Ubah ikon agar sesuai dengan format file untuk UX yang lebih baik
+        if (type === 'Excel') {
+            icon.className = 'fa fa-file-excel me-1';
+            exportToExcel();
+        } else if (type === 'PDF') {
+            icon.className = 'fa fa-file-pdf me-1';
+            exportToPDF();
+        }
+    }
+
+    function exportToExcel() {
+        const table = document.getElementById("tableLaporan");
+        const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.style.display !== 'none');
+        const ws_data = [];
+        rows.forEach((row) => {
+            const cells = Array.from(row.querySelectorAll("th, td"));
+            const rowData = cells.slice(0, -1).map(cell => cell.innerText.trim());
+            ws_data.push(rowData);
+        });
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(ws_data);
+        XLSX.utils.book_append_sheet(wb, ws, "Laporan Aspirasi");
+        XLSX.writeFile(wb, "Laporan_Aspirasi_SASS.xlsx");
+    }
+
+    function exportToPDF() {
+        const {
+            jsPDF
+        } = window.jspdf;
+        const doc = new jsPDF('l', 'mm', 'a4');
+        doc.text("Laporan Aspirasi SASS", 14, 15);
+        const table = document.getElementById("tableLaporan");
+        const body = [];
+        const rows = table.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            if (row.style.display !== 'none') {
+                const rowData = [
+                    row.cells[0].innerText.trim(),
+                    row.cells[1].innerText.trim().replace(/\n/g, " "),
+                    row.cells[2].innerText.trim().replace(/\n/g, " "),
+                    row.cells[3].innerText.trim(),
+                    row.cells[4].innerText.trim()
+                ];
+                body.push(rowData);
+            }
+        });
+        doc.autoTable({
+            head: [
+                ['Tgl Masuk', 'Pelapor', 'Kategori & Lokasi', 'Aspirasi', 'Status']
+            ],
+            body: body,
+            startY: 20,
+            theme: 'grid',
+            headStyles: {
+                fillColor: [43, 109, 242]
+            }
+        });
+        doc.save("Laporan_Aspirasi_SASS.pdf");
     }
     </script>
 
