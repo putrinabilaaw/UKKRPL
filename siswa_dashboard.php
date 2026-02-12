@@ -16,6 +16,7 @@
         --bg-light: #f4f7fa;
         --white: #ffffff;
         --text-muted: #95a5a6;
+        --success-green: #27ae60;
     }
 
     body {
@@ -114,7 +115,6 @@
         background: #f8f9fb;
         border: 1px solid #eee;
         border-radius: 8px;
-        /* Lebih kotak */
         font-size: 14px;
         margin-bottom: 15px;
         outline: none;
@@ -132,7 +132,6 @@
         color: white;
         border: none;
         border-radius: 8px;
-        /* Lebih kotak */
         font-weight: 600;
         transition: 0.3s;
     }
@@ -148,14 +147,12 @@
         overflow-y: auto;
     }
 
-    /* --- REVISI: CARD RIWAYAT KOTAK DENGAN SHADOW SEKELILING --- */
+    /* --- Card Riwayat --- */
     .dash-card {
         background: var(--white);
         border-radius: 4px;
-        /* Dibuat sangat kotak/siku */
         padding: 25px;
         margin-bottom: 25px;
-        /* Shadow di sekeliling (spread 10px) */
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         border: 1px solid #eee;
         position: relative;
@@ -177,7 +174,6 @@
     .badge-status {
         padding: 4px 10px;
         border-radius: 4px;
-        /* Kotak */
         font-size: 10px;
         font-weight: 800;
     }
@@ -192,6 +188,47 @@
         color: #333;
         margin: 15px 0;
         line-height: 1.5;
+    }
+
+    /* --- Fitur Tanggapan (Feedback Admin) --- */
+    .dash-feedback {
+        background: #f8f9fb;
+        border-left: 4px solid var(--primary-blue);
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        display: none;
+        /* Default sembunyi */
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .feedback-title {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary-blue);
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .feedback-text {
+        font-size: 14px;
+        color: #555;
+        font-style: italic;
+        margin: 0;
     }
 
     .dash-card-foot {
@@ -211,6 +248,15 @@
         font-size: 11px;
         text-transform: uppercase;
         margin-left: 15px;
+        transition: 0.2s;
+    }
+
+    .tanggapan-btn {
+        color: var(--success-green);
+    }
+
+    .tanggapan-btn:hover {
+        opacity: 0.7;
     }
 
     .edit {
@@ -248,6 +294,7 @@
                     <option>Fasilitas Kelas</option>
                     <option>Laboratorium</option>
                     <option>Toilet</option>
+                    <option>Alat Olahraga</option>
                 </select>
 
                 <label class="dash-label">Lokasi Detail</label>
@@ -278,10 +325,51 @@
                         "AC di bagian pojok belakang mengeluarkan suara bising dan tidak mengeluarkan udara dingin."
                     </p>
 
+                    <div id="feedback-1" class="dash-feedback">
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
+                        <p class="feedback-text">"Laporan telah kami terima. Teknisi akan dijadwalkan untuk pengecekan
+                            pada hari Rabu besok. Mohon ditunggu."</p>
+                    </div>
+
                     <div class="dash-card-foot">
                         <span>Diunggah pada: 9 Feb 2026</span>
                         <div class="dash-action">
+                            <button class="tanggapan-btn" onclick="toggleFeedback('feedback-1')">
+                                <i class="fas fa-comment-dots me-1"></i> Tanggapan
+                            </button>
                             <button class="edit">Edit</button>
+                            <button class="delete">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-head">
+                        <div>
+                            <span class="dash-meta">Lapangan Basket • Alat Olahraga</span>
+                            <h5 class="fw-bold mb-0 mt-1">Ring Basket Copot</h5>
+                        </div>
+                        <span class="badge-status bg-success text-white">SELESAI</span>
+                    </div>
+
+                    <p class="dash-desc">
+                        "Ring basket di sebelah utara sudah sangat goyang dan akhirnya copot saat jam olahraga tadi
+                        pagi."
+                    </p>
+
+                    <div id="feedback-2" class="dash-feedback">
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
+                        <p class="feedback-text">"Pekerjaan telah selesai. Ring basket baru sudah dipasang dan diperkuat
+                            bautnya. Terima kasih atas laporannya."</p>
+                    </div>
+
+                    <div class="dash-card-foot">
+                        <span>Diunggah pada: 1 Feb 2026</span>
+                        <div class="dash-action">
+                            <button class="tanggapan-btn" onclick="toggleFeedback('feedback-2')">
+                                <i class="fas fa-comment-dots me-1"></i> Tanggapan
+                            </button>
+                            <button class="edit" disabled style="opacity: 0.5; cursor: not-allowed;">Edit</button>
                             <button class="delete">Hapus</button>
                         </div>
                     </div>
@@ -289,6 +377,18 @@
             </div>
         </main>
     </div>
+
+    <script>
+    // Fungsi untuk membuka/menutup kotak tanggapan
+    function toggleFeedback(id) {
+        const feedbackDiv = document.getElementById(id);
+        if (feedbackDiv.style.display === "none" || feedbackDiv.style.display === "") {
+            feedbackDiv.style.display = "block";
+        } else {
+            feedbackDiv.style.display = "none";
+        }
+    }
+    </script>
 
 </body>
 
