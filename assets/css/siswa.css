@@ -1,173 +1,255 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+:root {
+        --primary-blue: #2b6df2;
+        --bg-light: #f4f7fa;
+        --white: #ffffff;
+        --text-muted: #95a5a6;
+        --success-green: #27ae60;
+    }
 
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: #f8fafc;
-    color: #0f172a;
-}
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-light);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
 
-/* Navbar */
-.dash-navbar {
-    background: #fff;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
+    /* --- Navbar --- */
+    .dash-navbar {
+        background: var(--white);
+        padding: 12px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        z-index: 1000;
+    }
 
-.dash-logo {
-    font-weight: 900;
-    font-size: 1.5rem;
-    color: #2563eb;
-}
+    .dash-logo {
+        font-weight: 800;
+        font-size: 22px;
+        color: var(--primary-blue);
+        text-decoration: none;
+    }
 
-.dash-user {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
+    .dash-user {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
 
-.dash-user-info {
-    text-align: right;
-}
+    .dash-user-info {
+        text-align: right;
+        line-height: 1.2;
+    }
 
-.dash-name {
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-}
+    .dash-name {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+    }
 
-.dash-role {
-    font-size: 0.55rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: #2563eb;
-}
+    .dash-role {
+        font-size: 11px;
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
 
-.dash-logout {
-    width: 40px;
-    height: 40px;
-    background: #fee2e2;
-    color: #ef4444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.75rem;
-    text-decoration: none;
-}
+    .dash-logout {
+        color: #e74c3c;
+        font-size: 18px;
+        text-decoration: none;
+    }
 
-/* Content */
-.dash-content {
-    padding: 2rem 0;
-}
+    /* --- Main Layout --- */
+    .wrapper {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
 
-/* Card */
-.dash-card {
-    background: #fff;
-    border-radius: 1.75rem;
-    padding: 1.5rem;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-}
+    /* --- Sidebar (Form Pengaduan) --- */
+    .dash-sidebar {
+        width: 350px;
+        background: var(--white);
+        border-right: 1px solid #eee;
+        padding: 30px;
+        overflow-y: auto;
+    }
 
-/* Form */
-.dash-label {
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #94a3b8;
-    margin-bottom: 0.25rem;
-    display: block;
-}
+    .sidebar-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-.dash-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    outline: none;
-}
+    .dash-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: block;
+    }
 
-.dash-input:focus {
-    border-color: #2563eb;
-    background: #fff;
-}
+    .dash-input {
+        width: 100%;
+        padding: 12px 15px;
+        background: #f8f9fb;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        outline: none;
+    }
 
-/* Button */
-.dash-btn {
-    width: 100%;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 1rem;
-    font-weight: 800;
-}
+    .dash-input:focus {
+        border-color: var(--primary-blue);
+        background: white;
+    }
 
-/* Card detail */
-.dash-card-head {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-}
+    .dash-btn {
+        width: 100%;
+        padding: 14px;
+        background: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
 
-.dash-meta {
-    font-size: 0.55rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    color: #3b82f6;
-    text-transform: uppercase;
-}
+    .dash-btn:hover {
+        background: #1a56d1;
+    }
 
-.badge-status {
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.55rem;
-    font-weight: 800;
-    text-transform: uppercase;
-}
+    /* --- Content Area --- */
+    .content-area {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+    }
 
-.badge-status.pending {
-    background: #fef3c7;
-    color: #d97706;
-}
+    /* --- Card Riwayat --- */
+    .dash-card {
+        background: var(--white);
+        border-radius: 4px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eee;
+        position: relative;
+    }
 
-.dash-desc {
-    font-size: 0.85rem;
-    color: #64748b;
-    font-style: italic;
-}
+    .dash-card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
 
-/* Footer card */
-.dash-card-foot {
-    border-top: 1px dashed #e2e8f0;
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.65rem;
-    color: #94a3b8;
-}
+    .dash-meta {
+        font-size: 12px;
+        color: var(--primary-blue);
+        font-weight: 700;
+        text-transform: uppercase;
+    }
 
-.dash-action button {
-    background: none;
-    border: none;
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-left: 0.75rem;
-}
+    .badge-status {
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 800;
+    }
 
-.dash-action .edit {
-    color: #2563eb;
-}
+    .pending {
+        background: #fff9e6;
+        color: #f39c12;
+    }
 
-.dash-action .delete {
-    color: #ef4444;
-}
+    .dash-desc {
+        font-size: 15px;
+        color: #333;
+        margin: 15px 0;
+        line-height: 1.5;
+    }
+
+    /* --- Fitur Tanggapan (Feedback Admin) --- */
+    .dash-feedback {
+        background: #f8f9fb;
+        border-left: 4px solid var(--primary-blue);
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        display: none;
+        /* Default sembunyi */
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .feedback-title {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary-blue);
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .feedback-text {
+        font-size: 14px;
+        color: #555;
+        font-style: italic;
+        margin: 0;
+    }
+
+    .dash-card-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f1f1f1;
+        padding-top: 15px;
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .dash-action button {
+        border: none;
+        background: none;
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        margin-left: 15px;
+        transition: 0.2s;
+    }
+
+    .tanggapan-btn {
+        color: var(--success-green);
+    }
+
+    .tanggapan-btn:hover {
+        opacity: 0.7;
+    }
+
+    .edit {
+        color: var(--primary-blue);
+    }
+
+    .delete {
+        color: #e74c3c;
+    }

@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
+    header("Location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -8,277 +17,26 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">        
+    <link rel="stylesheet" href="assets/css/siswa.css">
 
-    <style>
-    :root {
-        --primary-blue: #2b6df2;
-        --bg-light: #f4f7fa;
-        --white: #ffffff;
-        --text-muted: #95a5a6;
-        --success-green: #27ae60;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-light);
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
-
-    /* --- Navbar --- */
-    .dash-navbar {
-        background: var(--white);
-        padding: 12px 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        z-index: 1000;
-    }
-
-    .dash-logo {
-        font-weight: 800;
-        font-size: 22px;
-        color: var(--primary-blue);
-        text-decoration: none;
-    }
-
-    .dash-user {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .dash-user-info {
-        text-align: right;
-        line-height: 1.2;
-    }
-
-    .dash-name {
-        display: block;
-        font-weight: 700;
-        font-size: 14px;
-    }
-
-    .dash-role {
-        font-size: 11px;
-        color: var(--primary-blue);
-        font-weight: 600;
-    }
-
-    .dash-logout {
-        color: #e74c3c;
-        font-size: 18px;
-        text-decoration: none;
-    }
-
-    /* --- Main Layout --- */
-    .wrapper {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-    }
-
-    /* --- Sidebar (Form Pengaduan) --- */
-    .dash-sidebar {
-        width: 350px;
-        background: var(--white);
-        border-right: 1px solid #eee;
-        padding: 30px;
-        overflow-y: auto;
-    }
-
-    .sidebar-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .dash-label {
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .dash-input {
-        width: 100%;
-        padding: 12px 15px;
-        background: #f8f9fb;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        font-size: 14px;
-        margin-bottom: 15px;
-        outline: none;
-    }
-
-    .dash-input:focus {
-        border-color: var(--primary-blue);
-        background: white;
-    }
-
-    .dash-btn {
-        width: 100%;
-        padding: 14px;
-        background: var(--primary-blue);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .dash-btn:hover {
-        background: #1a56d1;
-    }
-
-    /* --- Content Area --- */
-    .content-area {
-        flex: 1;
-        padding: 40px;
-        overflow-y: auto;
-    }
-
-    /* --- Card Riwayat --- */
-    .dash-card {
-        background: var(--white);
-        border-radius: 4px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        border: 1px solid #eee;
-        position: relative;
-    }
-
-    .dash-card-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
-
-    .dash-meta {
-        font-size: 12px;
-        color: var(--primary-blue);
-        font-weight: 700;
-        text-transform: uppercase;
-    }
-
-    .badge-status {
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 10px;
-        font-weight: 800;
-    }
-
-    .pending {
-        background: #fff9e6;
-        color: #f39c12;
-    }
-
-    .dash-desc {
-        font-size: 15px;
-        color: #333;
-        margin: 15px 0;
-        line-height: 1.5;
-    }
-
-    /* --- Fitur Tanggapan (Feedback Admin) --- */
-    .dash-feedback {
-        background: #f8f9fb;
-        border-left: 4px solid var(--primary-blue);
-        padding: 15px;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        border-radius: 4px;
-        display: none;
-        /* Default sembunyi */
-        animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .feedback-title {
-        font-size: 11px;
-        font-weight: 800;
-        color: var(--primary-blue);
-        text-transform: uppercase;
-        margin-bottom: 5px;
-        display: block;
-    }
-
-    .feedback-text {
-        font-size: 14px;
-        color: #555;
-        font-style: italic;
-        margin: 0;
-    }
-
-    .dash-card-foot {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid #f1f1f1;
-        padding-top: 15px;
-        font-size: 12px;
-        color: var(--text-muted);
-    }
-
-    .dash-action button {
-        border: none;
-        background: none;
-        font-weight: 700;
-        font-size: 11px;
-        text-transform: uppercase;
-        margin-left: 15px;
-        transition: 0.2s;
-    }
-
-    .tanggapan-btn {
-        color: var(--success-green);
-    }
-
-    .tanggapan-btn:hover {
-        opacity: 0.7;
-    }
-
-    .edit {
-        color: var(--primary-blue);
-    }
-
-    .delete {
-        color: #e74c3c;
-    }
-    </style>
 </head>
 
 <body>
-
     <nav class="dash-navbar">
         <a href="#" class="dash-logo">SASS</a>
         <div class="dash-user">
             <div class="dash-user-info">
-                <span class="dash-name">Budi Santoso</span>
-                <span class="dash-role">Siswa • XII RPL 1</span>
+                <span class="dash-name">
+                    <?= htmlspecialchars($_SESSION['username']); ?>
+                </span>
+                <span class="dash-role">
+                    <?= htmlspecialchars($_SESSION['role']); ?>
+                </span>
             </div>
-            <a href="#" class="dash-logout"><i class="fas fa-power-off"></i></a>
+            <a href="logout.php" class="dash-logout">
+                <i class="fas fa-power-off"></i>
+            </a>
         </div>
     </nav>
 
@@ -378,18 +136,6 @@
         </main>
     </div>
 
-    <script>
-    // Fungsi untuk membuka/menutup kotak tanggapan
-    function toggleFeedback(id) {
-        const feedbackDiv = document.getElementById(id);
-        if (feedbackDiv.style.display === "none" || feedbackDiv.style.display === "") {
-            feedbackDiv.style.display = "block";
-        } else {
-            feedbackDiv.style.display = "none";
-        }
-    }
-    </script>
-
+    <script src="assets/js/siswa.js"></script>
 </body>
-
 </html>

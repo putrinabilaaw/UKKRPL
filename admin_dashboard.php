@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -9,224 +17,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/admin.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
-    <style>
-    :root {
-        --primary-blue: #2b6df2;
-        --bg-light: #f4f7fa;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-light);
-        color: #2d3436;
-    }
-
-    .admin-navbar {
-        background: #fff;
-        padding: 15px 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-    }
-
-    .admin-logo {
-        font-weight: 800;
-        font-size: 22px;
-        color: var(--primary-blue);
-    }
-
-    .admin-logo span {
-        color: #1e272e;
-        font-weight: 400;
-    }
-
-    .admin-content {
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
-
-    .admin-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-    }
-
-    h1 {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-
-    .subtitle {
-        color: #95a5a6;
-        font-size: 14px;
-    }
-
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .status-filter-group {
-        display: flex;
-        gap: 8px;
-        background: #fff;
-        padding: 6px;
-        border-radius: 10px;
-        border: 1px solid #eee;
-    }
-
-    .filter-btn {
-        border: none;
-        background: transparent;
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #95a5a6;
-        transition: 0.3s;
-    }
-
-    .filter-btn.active {
-        background: #1e272e;
-        color: #fff;
-    }
-
-    .filter-btn:hover:not(.active) {
-        background: #f8f9fb;
-        color: var(--primary-blue);
-    }
-
-    .admin-card {
-        background: #fff;
-        border-radius: 15px;
-        padding: 30px;
-        border: none;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .admin-table {
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-
-    .admin-table thead th {
-        background: #f8f9fb;
-        border: none;
-        color: #b2bec3;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        padding: 15px;
-    }
-
-    .admin-table tbody td {
-        padding: 20px 15px;
-        border-bottom: 1px solid #f1f1f1;
-    }
-
-    .meta-id {
-        font-size: 12px;
-        color: #95a5a6;
-    }
-
-    .category-badge {
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--primary-blue);
-        background: rgba(43, 109, 242, 0.05);
-        padding: 4px 8px;
-        border-radius: 5px;
-    }
-
-    .status-pill {
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 10px;
-        font-weight: 800;
-        text-transform: uppercase;
-    }
-
-    .st-menunggu {
-        background: #fff9e6;
-        color: #f39c12;
-    }
-
-    .st-proses {
-        background: #e8f0fe;
-        color: #2b6df2;
-    }
-
-    .st-selesai {
-        background: #e6f9ed;
-        color: #27ae60;
-    }
-
-    .btn-action {
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 700;
-        border: none;
-        transition: 0.3s;
-    }
-
-    .btn-tanggapi {
-        background: #1e272e;
-        color: white;
-    }
-
-    .btn-tanggapi:hover {
-        background: var(--primary-blue);
-    }
-
-    .filter-bar-extra {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .input-custom {
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 8px 12px;
-        font-size: 13px;
-        color: #2d3436;
-        outline: none;
-    }
-
-    .input-custom:focus {
-        border-color: var(--primary-blue);
-    }
-
-    .btn-export-main {
-        background: #2b6df2;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-size: 13px;
-        font-weight: 600;
-    }
-    </style>
 </head>
 
 <body>
-
-    <nav class="admin-navbar">
-        <div class="admin-logo">SASS <span>Admin</span></div>
-        <div class="d-flex align-items-center gap-3">
-            <span class="fw-bold" style="font-size: 14px;">Pak Admin (admin)</span>
-            <a href="#" class="text-danger text-decoration-none fw-bold" style="font-size: 14px;">Logout</a>
+    <nav class="dash-navbar">
+        <a href="#" class="dash-logo">SASS</a>
+        <div class="dash-user">
+            <div class="dash-user-info">
+                <span class="dash-name">
+                    <?= htmlspecialchars($_SESSION['username']); ?>
+                </span>
+                <span class="dash-role">
+                    <?= htmlspecialchars($_SESSION['role']); ?>
+                </span>
+            </div>
+            <a href="logout.php" class="dash-logout">
+                <i class="fas fa-power-off"></i>
+            </a>
         </div>
     </nav>
 
@@ -344,117 +156,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-    let activeStatus = 'Semua';
-
-    function applyFilters(status, btn) {
-        if (status) {
-            activeStatus = status;
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        const dateVal = document.getElementById('fDate').value;
-        const monthVal = document.getElementById('fMonth').value;
-        const catVal = document.getElementById('fCategory').value;
-        const searchVal = document.getElementById('fSearch').value.toLowerCase();
-
-        const rows = document.querySelectorAll('#tableLaporan tbody tr');
-
-        rows.forEach(row => {
-            const rowStatus = row.getAttribute('data-status');
-            const rowDate = row.getAttribute('data-tanggal');
-            const rowCat = row.getAttribute('data-kategori');
-            const rowFullText = row.innerText.toLowerCase();
-            const rowDateText = row.querySelector('.tgl-text').innerText;
-
-            const matchStatus = (activeStatus === 'Semua' || rowStatus === activeStatus);
-            const matchDate = (!dateVal || rowDate === dateVal);
-            const matchMonth = (!monthVal || rowDateText.includes(monthVal));
-            const matchCat = (!catVal || rowCat === catVal);
-            const matchSearch = (!searchVal || rowFullText.includes(searchVal));
-
-            if (matchStatus && matchDate && matchMonth && matchCat && matchSearch) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    // --- LOGIKA EKSPOR DINAMIS ---
-
-    function handleExport(type) {
-        // 1. Ambil elemen label (span) dan tombol (untuk mengganti ikon jika perlu)
-        const exportLabel = document.getElementById('exportLabel');
-        const exportBtn = document.getElementById('btnExportToggle');
-        const icon = exportBtn.querySelector('i');
-
-        // 2. Ubah teks label menjadi format yang dipilih
-        exportLabel.innerText = type;
-
-        // 3. (Opsional) Ubah ikon agar sesuai dengan format file untuk UX yang lebih baik
-        if (type === 'Excel') {
-            icon.className = 'fa fa-file-excel me-1';
-            exportToExcel();
-        } else if (type === 'PDF') {
-            icon.className = 'fa fa-file-pdf me-1';
-            exportToPDF();
-        }
-    }
-
-    function exportToExcel() {
-        const table = document.getElementById("tableLaporan");
-        const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.style.display !== 'none');
-        const ws_data = [];
-        rows.forEach((row) => {
-            const cells = Array.from(row.querySelectorAll("th, td"));
-            const rowData = cells.slice(0, -1).map(cell => cell.innerText.trim());
-            ws_data.push(rowData);
-        });
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet(ws_data);
-        XLSX.utils.book_append_sheet(wb, ws, "Laporan Aspirasi");
-        XLSX.writeFile(wb, "Laporan_Aspirasi_SASS.xlsx");
-    }
-
-    function exportToPDF() {
-        const {
-            jsPDF
-        } = window.jspdf;
-        const doc = new jsPDF('l', 'mm', 'a4');
-        doc.text("Laporan Aspirasi SASS", 14, 15);
-        const table = document.getElementById("tableLaporan");
-        const body = [];
-        const rows = table.querySelectorAll("tbody tr");
-        rows.forEach(row => {
-            if (row.style.display !== 'none') {
-                const rowData = [
-                    row.cells[0].innerText.trim(),
-                    row.cells[1].innerText.trim().replace(/\n/g, " "),
-                    row.cells[2].innerText.trim().replace(/\n/g, " "),
-                    row.cells[3].innerText.trim(),
-                    row.cells[4].innerText.trim()
-                ];
-                body.push(rowData);
-            }
-        });
-        doc.autoTable({
-            head: [
-                ['Tgl Masuk', 'Pelapor', 'Kategori & Lokasi', 'Aspirasi', 'Status']
-            ],
-            body: body,
-            startY: 20,
-            theme: 'grid',
-            headStyles: {
-                fillColor: [43, 109, 242]
-            }
-        });
-        doc.save("Laporan_Aspirasi_SASS.pdf");
-    }
-    </script>
-
+   <script src="assets/js/admin.js"></script>
 </body>
-
 </html>
