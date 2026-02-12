@@ -2,15 +2,20 @@
 <html lang="id">
 
 <head>
+       
     <meta charset="UTF-8">
+       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SASS - Dashboard Siswa</title>
+        <title>SASS - Dashboard Siswa</title>
 
+       
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+       
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+       
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
+        <style>
     :root {
         --primary-blue: #2b6df2;
         --bg-light: #f4f7fa;
@@ -277,15 +282,19 @@
             <div class="dash-user-info">
                 <span class="dash-name">Budi Santoso</span>
                 <span class="dash-role">Siswa • XII RPL 1</span>
+
             </div>
             <a href="#" class="dash-logout"><i class="fas fa-power-off"></i></a>
+
         </div>
+
     </nav>
 
     <div class="wrapper">
         <aside class="dash-sidebar">
             <h5 class="sidebar-title">
                 <i class="fas fa-edit text-primary"></i> Buat Pengaduan
+
             </h5>
 
             <form id="aspForm">
@@ -295,6 +304,7 @@
                     <option>Laboratorium</option>
                     <option>Toilet</option>
                     <option>Alat Olahraga</option>
+
                 </select>
 
                 <label class="dash-label">Lokasi Detail</label>
@@ -305,7 +315,9 @@
                     required></textarea>
 
                 <button type="submit" class="dash-btn">Kirim Sekarang</button>
+
             </form>
+
         </aside>
 
         <main class="content-area">
@@ -317,18 +329,23 @@
                         <div>
                             <span class="dash-meta">Ruang 10 • Fasilitas Kelas</span>
                             <h5 class="fw-bold mb-0 mt-1">AC Tidak Dingin</h5>
+
                         </div>
                         <span class="badge-status pending">MENUNGGU</span>
+
                     </div>
 
                     <p class="dash-desc">
-                        "AC di bagian pojok belakang mengeluarkan suara bising dan tidak mengeluarkan udara dingin."
+                        "AC di bagian pojok belakang mengeluarkan suara bising dan tidak
+                        mengeluarkan udara dingin."
                     </p>
 
                     <div id="feedback-1" class="dash-feedback">
-                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
-                        <p class="feedback-text">"Laporan telah kami terima. Teknisi akan dijadwalkan untuk pengecekan
-                            pada hari Rabu besok. Mohon ditunggu."</p>
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan
+                            Admin:</span>
+                        <p class="feedback-text">"Laporan telah kami terima. Teknisi akan
+                            dijadwalkan untuk pengecekan pada hari Rabu besok. Mohon ditunggu."</p>
+
                     </div>
 
                     <div class="dash-card-foot">
@@ -337,10 +354,13 @@
                             <button class="tanggapan-btn" onclick="toggleFeedback('feedback-1')">
                                 <i class="fas fa-comment-dots me-1"></i> Tanggapan
                             </button>
-                            <button class="edit">Edit</button>
+                            <button class="edit" onclick="window.location.href='edit_pengaduan_siswa.php'">Edit</button>
                             <button class="delete">Hapus</button>
+
                         </div>
+
                     </div>
+
                 </div>
 
                 <div class="dash-card">
@@ -348,19 +368,22 @@
                         <div>
                             <span class="dash-meta">Lapangan Basket • Alat Olahraga</span>
                             <h5 class="fw-bold mb-0 mt-1">Ring Basket Copot</h5>
+
                         </div>
                         <span class="badge-status bg-success text-white">SELESAI</span>
+
                     </div>
 
                     <p class="dash-desc">
-                        "Ring basket di sebelah utara sudah sangat goyang dan akhirnya copot saat jam olahraga tadi
-                        pagi."
+                        "Ring basket di sebelah utara sudah sangat goyang dan akhirnya copot
+                        saat jam olahraga tadi pagi."
                     </p>
 
                     <div id="feedback-2" class="dash-feedback">
-                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
-                        <p class="feedback-text">"Pekerjaan telah selesai. Ring basket baru sudah dipasang dan diperkuat
-                            bautnya. Terima kasih atas laporannya."</p>
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan
+                            Admin:</span>
+                        <p class="feedback-text">"Pekerjaan telah selesai. Ring basket baru
+                            sudah dipasang dan diperkuat bautnya. Terima kasih atas laporannya."</p>
                     </div>
 
                     <div class="dash-card-foot">
@@ -369,8 +392,8 @@
                             <button class="tanggapan-btn" onclick="toggleFeedback('feedback-2')">
                                 <i class="fas fa-comment-dots me-1"></i> Tanggapan
                             </button>
-                            <button class="edit" disabled style="opacity: 0.5; cursor: not-allowed;">Edit</button>
-                            <button class="delete">Hapus</button>
+                            <button class="edit" onclick="window.location.href='edit_pengaduan_siswa.php'">Edit</button>
+                            <button class=" delete">Hapus</button>
                         </div>
                     </div>
                 </div>
