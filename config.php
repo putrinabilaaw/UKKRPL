@@ -1,5 +1,10 @@
 <?php
-// Konfigurasi Database sesuai file SQL kamu
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+date_default_timezone_set('Asia/Jakarta');
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -8,8 +13,8 @@ $db   = "pengaduan";
 $conn = mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
-session_start();
+$base_url = "http://localhost/pengaduan/";
 ?>

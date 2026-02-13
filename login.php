@@ -1,3 +1,41 @@
+<?php
+session_start();
+include "config.php";
+
+if (isset($_POST['login'])) {
+
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = $_POST['password'];
+
+    $query = mysqli_query($conn, "SELECT * FROM users WHERE username='$username'");
+    $data = mysqli_fetch_assoc($query);
+
+    if ($data) {
+
+        if (password_verify($password, $data['password'])) {
+
+            session_regenerate_id(true);
+
+            $_SESSION['id_user']  = $data['id_user'];
+            $_SESSION['username'] = $data['username'];
+            $_SESSION['role']     = $data['role'];
+
+            if ($data['role'] == 'admin') {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: siswa_dashboard.php");
+            }
+            exit;
+
+        } else {
+            echo "<script>alert('Password salah!');</script>";
+        }
+
+    } else {
+        echo "<script>alert('Username tidak ditemukan!');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -6,13 +44,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - SASS</title>
 
-    <!-- Bootstrap (grid & helper saja) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-
-    <!-- Shared CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
