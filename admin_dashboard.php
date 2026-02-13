@@ -1,11 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
-    header("Location: login.php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -17,7 +9,6 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/admin.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -275,20 +266,12 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
 </head>
 
 <body>
-    <nav class="dash-navbar">
-        <a href="#" class="dash-logo">SASS</a>
-        <div class="dash-user">
-            <div class="dash-user-info">
-                <span class="dash-name">
-                    <?= htmlspecialchars($_SESSION['username']); ?>
-                </span>
-                <span class="dash-role">
-                    <?= htmlspecialchars($_SESSION['role']); ?>
-                </span>
-            </div>
-            <a href="logout.php" class="dash-logout">
-                <i class="fas fa-power-off"></i>
-            </a>
+
+    <nav class="admin-navbar">
+        <div class="admin-logo">SASS <span>Admin</span></div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="fw-bold" style="font-size: 14px;">Pak Admin (admin)</span>
+            <a href="#" class="text-danger text-decoration-none fw-bold" style="font-size: 14px;">Logout</a>
         </div>
     </nav>
 
@@ -506,10 +489,6 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
         doc.save("Laporan_Aspirasi.pdf");
     }
     </script>
-    =======
-
-    <script src="assets/js/admin.js"></script>
-
 </body>
 
 </html>

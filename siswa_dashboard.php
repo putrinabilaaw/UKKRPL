@@ -1,12 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
-    header("Location: login.php");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -260,20 +251,15 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
 </head>
 
 <body>
+
     <nav class="dash-navbar">
         <a href="#" class="dash-logo">SASS</a>
         <div class="dash-user">
             <div class="dash-user-info">
-                <span class="dash-name">
-                    <?= htmlspecialchars($_SESSION['username']); ?>
-                </span>
-                <span class="dash-role">
-                    <?= htmlspecialchars($_SESSION['role']); ?>
-                </span>
+                <span class="dash-name">Budi Santoso</span>
+                <span class="dash-role">Siswa • XII RPL 1</span>
             </div>
-            <a href="logout.php" class="dash-logout">
-                <i class="fas fa-power-off"></i>
-            </a>
+            <a href="#" class="dash-logout"><i class="fas fa-power-off"></i></a>
         </div>
     </nav>
 
@@ -405,9 +391,6 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'siswa') {
         });
     }
     </script>
-
-    <script src="assets/js/siswa.js"></script>
-
 </body>
 
 </html>
