@@ -2,20 +2,16 @@
 <html lang="id">
 
 <head>
-       
     <meta charset="UTF-8">
-       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SASS - Dashboard Siswa</title>
+    <title>SASS - Dashboard Siswa</title>
 
-       
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-       
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-       
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <style>
+    <style>
     :root {
         --primary-blue: #2b6df2;
         --bg-light: #f4f7fa;
@@ -87,7 +83,7 @@
         overflow: hidden;
     }
 
-    /* --- Sidebar (Form Pengaduan) --- */
+    /* --- Sidebar --- */
     .dash-sidebar {
         width: 350px;
         background: var(--white);
@@ -125,11 +121,6 @@
         outline: none;
     }
 
-    .dash-input:focus {
-        border-color: var(--primary-blue);
-        background: white;
-    }
-
     .dash-btn {
         width: 100%;
         padding: 14px;
@@ -141,10 +132,6 @@
         transition: 0.3s;
     }
 
-    .dash-btn:hover {
-        background: #1a56d1;
-    }
-
     /* --- Content Area --- */
     .content-area {
         flex: 1;
@@ -152,7 +139,6 @@
         overflow-y: auto;
     }
 
-    /* --- Card Riwayat --- */
     .dash-card {
         background: var(--white);
         border-radius: 4px;
@@ -161,6 +147,13 @@
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         border: 1px solid #eee;
         position: relative;
+        transition: all 0.3s ease;
+    }
+
+    /* Animasi Keluar Saat Hapus */
+    .fade-out {
+        opacity: 0;
+        transform: scale(0.9);
     }
 
     .dash-card-head {
@@ -195,7 +188,6 @@
         line-height: 1.5;
     }
 
-    /* --- Fitur Tanggapan (Feedback Admin) --- */
     .dash-feedback {
         background: #f8f9fb;
         border-left: 4px solid var(--primary-blue);
@@ -204,7 +196,6 @@
         margin-bottom: 15px;
         border-radius: 4px;
         display: none;
-        /* Default sembunyi */
         animation: fadeIn 0.3s ease;
     }
 
@@ -218,22 +209,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-    }
-
-    .feedback-title {
-        font-size: 11px;
-        font-weight: 800;
-        color: var(--primary-blue);
-        text-transform: uppercase;
-        margin-bottom: 5px;
-        display: block;
-    }
-
-    .feedback-text {
-        font-size: 14px;
-        color: #555;
-        font-style: italic;
-        margin: 0;
     }
 
     .dash-card-foot {
@@ -254,14 +229,11 @@
         text-transform: uppercase;
         margin-left: 15px;
         transition: 0.2s;
+        cursor: pointer;
     }
 
     .tanggapan-btn {
         color: var(--success-green);
-    }
-
-    .tanggapan-btn:hover {
-        opacity: 0.7;
     }
 
     .edit {
@@ -270,6 +242,10 @@
 
     .delete {
         color: #e74c3c;
+    }
+
+    .delete:hover {
+        opacity: 0.7;
     }
     </style>
 </head>
@@ -282,21 +258,16 @@
             <div class="dash-user-info">
                 <span class="dash-name">Budi Santoso</span>
                 <span class="dash-role">Siswa • XII RPL 1</span>
-
             </div>
             <a href="#" class="dash-logout"><i class="fas fa-power-off"></i></a>
-
         </div>
-
     </nav>
 
     <div class="wrapper">
         <aside class="dash-sidebar">
             <h5 class="sidebar-title">
                 <i class="fas fa-edit text-primary"></i> Buat Pengaduan
-
             </h5>
-
             <form id="aspForm">
                 <label class="dash-label">Kategori Sarana</label>
                 <select id="kat" class="dash-input">
@@ -304,7 +275,6 @@
                     <option>Laboratorium</option>
                     <option>Toilet</option>
                     <option>Alat Olahraga</option>
-
                 </select>
 
                 <label class="dash-label">Lokasi Detail</label>
@@ -315,9 +285,7 @@
                     required></textarea>
 
                 <button type="submit" class="dash-btn">Kirim Sekarang</button>
-
             </form>
-
         </aside>
 
         <main class="content-area">
@@ -329,25 +297,17 @@
                         <div>
                             <span class="dash-meta">Ruang 10 • Fasilitas Kelas</span>
                             <h5 class="fw-bold mb-0 mt-1">AC Tidak Dingin</h5>
-
                         </div>
                         <span class="badge-status pending">MENUNGGU</span>
-
                     </div>
-
                     <p class="dash-desc">
-                        "AC di bagian pojok belakang mengeluarkan suara bising dan tidak
-                        mengeluarkan udara dingin."
+                        "AC di bagian pojok belakang mengeluarkan suara bising dan tidak mengeluarkan udara dingin."
                     </p>
-
                     <div id="feedback-1" class="dash-feedback">
-                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan
-                            Admin:</span>
-                        <p class="feedback-text">"Laporan telah kami terima. Teknisi akan
-                            dijadwalkan untuk pengecekan pada hari Rabu besok. Mohon ditunggu."</p>
-
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
+                        <p class="feedback-text">"Laporan telah kami terima. Teknisi akan dijadwalkan untuk pengecekan
+                            pada hari Rabu besok."</p>
                     </div>
-
                     <div class="dash-card-foot">
                         <span>Diunggah pada: 9 Feb 2026</span>
                         <div class="dash-action">
@@ -355,12 +315,9 @@
                                 <i class="fas fa-comment-dots me-1"></i> Tanggapan
                             </button>
                             <button class="edit" onclick="window.location.href='edit_pengaduan_siswa.php'">Edit</button>
-                            <button class="delete">Hapus</button>
-
+                            <button class="delete" onclick="confirmDelete(this)">Hapus</button>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="dash-card">
@@ -368,24 +325,17 @@
                         <div>
                             <span class="dash-meta">Lapangan Basket • Alat Olahraga</span>
                             <h5 class="fw-bold mb-0 mt-1">Ring Basket Copot</h5>
-
                         </div>
                         <span class="badge-status bg-success text-white">SELESAI</span>
-
                     </div>
-
                     <p class="dash-desc">
-                        "Ring basket di sebelah utara sudah sangat goyang dan akhirnya copot
-                        saat jam olahraga tadi pagi."
+                        "Ring basket di sebelah utara sudah sangat goyang dan akhirnya copot saat jam olahraga tadi
+                        pagi."
                     </p>
-
                     <div id="feedback-2" class="dash-feedback">
-                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan
-                            Admin:</span>
-                        <p class="feedback-text">"Pekerjaan telah selesai. Ring basket baru
-                            sudah dipasang dan diperkuat bautnya. Terima kasih atas laporannya."</p>
+                        <span class="feedback-title"><i class="fas fa-reply me-1"></i> Tanggapan Admin:</span>
+                        <p class="feedback-text">"Pekerjaan telah selesai. Ring basket baru sudah dipasang."</p>
                     </div>
-
                     <div class="dash-card-foot">
                         <span>Diunggah pada: 1 Feb 2026</span>
                         <div class="dash-action">
@@ -393,7 +343,7 @@
                                 <i class="fas fa-comment-dots me-1"></i> Tanggapan
                             </button>
                             <button class="edit" onclick="window.location.href='edit_pengaduan_siswa.php'">Edit</button>
-                            <button class=" delete">Hapus</button>
+                            <button class="delete" onclick="confirmDelete(this)">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -402,17 +352,45 @@
     </div>
 
     <script>
-    // Fungsi untuk membuka/menutup kotak tanggapan
     function toggleFeedback(id) {
         const feedbackDiv = document.getElementById(id);
-        if (feedbackDiv.style.display === "none" || feedbackDiv.style.display === "") {
-            feedbackDiv.style.display = "block";
-        } else {
-            feedbackDiv.style.display = "none";
-        }
+        feedbackDiv.style.display = (feedbackDiv.style.display === "none" || feedbackDiv.style.display === "") ?
+            "block" : "none";
+    }
+
+    // FUNGSI KONFIRMASI HAPUS
+    function confirmDelete(button) {
+        const card = button.closest('.dash-card'); // Mengambil card terkait
+
+        Swal.fire({
+            title: 'Hapus Pengaduan?',
+            text: "Apakah anda yakin mau menghapus pengaduan ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#95a5a6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Tambahkan animasi keluar
+                card.classList.add('fade-out');
+
+                // Tunggu animasi selesai baru hapus dari DOM
+                setTimeout(() => {
+                    card.remove();
+                    Swal.fire({
+                        title: 'Terhapus!',
+                        text: 'Pengaduan Anda telah berhasil dihapus.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }, 300);
+            }
+        });
     }
     </script>
-
 </body>
 
 </html>
