@@ -126,7 +126,7 @@
         color: #27ae60;
     }
 
-    /* --- REVISI: Filter Buttons Berwarna --- */
+    /* --- Filter Buttons Berwarna --- */
     .status-filter-group {
         display: flex;
         gap: 5px;
@@ -147,7 +147,6 @@
         transition: 0.3s;
     }
 
-    /* Warna saat AKTIF sesuai kategori */
     .filter-btn[data-type="Semua"].active {
         color: var(--primary-blue) !important;
         background: #fff;
@@ -172,19 +171,6 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* Warna saat HOVER */
-    .filter-btn[data-type="Menunggu"]:hover:not(.active) {
-        color: #f39c12;
-    }
-
-    .filter-btn[data-type="Proses"]:hover:not(.active) {
-        color: #2b6df2;
-    }
-
-    .filter-btn[data-type="Selesai"]:hover:not(.active) {
-        color: #27ae60;
-    }
-
     .admin-card {
         background: #fff;
         border-radius: 15px;
@@ -193,7 +179,6 @@
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     }
 
-    /* --- Tabel Status Pills --- */
     .status-pill {
         padding: 6px 12px;
         border-radius: 6px;
@@ -331,11 +316,13 @@
                         onclick="applyFilters('Selesai', this)">Selesai</button>
                 </div>
                 <input type="date" id="fDate" class="input-custom" onchange="applyFilters()">
+
                 <select id="fCategory" class="input-custom" onchange="applyFilters()">
                     <option value="">Semua Kategori</option>
                     <option value="Fasilitas Kelas">Fasilitas Kelas</option>
                     <option value="Alat Olahraga">Alat Olahraga</option>
                 </select>
+
                 <input type="text" id="fSearch" class="input-custom flex-grow-1" placeholder="Cari pelapor atau NIS..."
                     onkeyup="applyFilters()">
             </div>
@@ -418,29 +405,39 @@
         document.getElementById('count-selesai').innerText = selesai;
     }
 
+    // FUNGSI FILTER YANG SUDAH DIREVISI TOTAL
     function applyFilters(status, btn) {
+        // Update UI tombol status jika ada perubahan
         if (status) {
             activeStatus = status;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         }
+
+        // Ambil semua kriteria filter
         const dateVal = document.getElementById('fDate').value;
         const catVal = document.getElementById('fCategory').value;
         const searchVal = document.getElementById('fSearch').value.toLowerCase();
 
+        // Jalankan filter pada tabel
         document.querySelectorAll('#tableLaporan tbody tr').forEach(row => {
             const rowStatus = row.getAttribute('data-status');
             const rowDate = row.getAttribute('data-tanggal');
             const rowCat = row.getAttribute('data-kategori');
             const rowText = row.innerText.toLowerCase();
 
+            // Logika pencocokan (Masing-masing filter harus TRUE)
             const matchStatus = (activeStatus === 'Semua' || rowStatus === activeStatus);
             const matchDate = (!dateVal || rowDate === dateVal);
-            const matchCat = (!catVal || rowCat === matchCat); // Fix logic typo here
+            const matchCat = (!catVal || rowCat === catVal); // Perbaikan: membandingkan dengan catVal
             const matchSearch = (!searchVal || rowText.includes(searchVal));
 
-            row.style.display = (matchStatus && matchDate && (catVal === "" || rowCat === catVal) &&
-                matchSearch) ? '' : 'none';
+            // Jika semua filter cocok, tampilkan barisnya
+            if (matchStatus && matchDate && matchCat && matchSearch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
         });
     }
 
