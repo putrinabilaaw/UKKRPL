@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
+    header("Location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -22,10 +31,16 @@
         <a href="#" class="dash-logo">SASS</a>
         <div class="dash-user">
             <div class="dash-user-info">
-                <span class="dash-name">Budi Santoso</span>
-                <span class="dash-role">Siswa • XII RPL 1</span>
+                <span class="dash-name">
+                    <?= htmlspecialchars($_SESSION['username']); ?>
+                </span>
+                <span class="dash-role">
+                    admin
+                </span>
             </div>
-            <a href="#" class="dash-logout"><i class="fas fa-power-off"></i></a>
+            <a href="logout.php" class="dash-logout">
+                <i class="fas fa-power-off"><link rel="stylesheet" href="logout.php"></i>
+            </a>
         </div>
     </nav>
 

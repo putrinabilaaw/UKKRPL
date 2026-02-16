@@ -92,7 +92,7 @@ if (isset($_POST['login'])) {
 
             <div class="auth-footer">
                 <p>Belum punya akun?
-                    <a href="register.php">Daftar Akun Baru</a>
+                    <a href="registrasi.php">Daftar Akun Baru</a>
                 </p>
             </div>
         </div>
