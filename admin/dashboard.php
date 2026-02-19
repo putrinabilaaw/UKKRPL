@@ -1,10 +1,37 @@
 <?php
 session_start();
+require_once "../config.php";
 
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['id_user'])) {
     header("Location: ../login.php");
     exit;
 }
+
+if ($_SESSION['role'] !== 'admin') {
+    die("Akses ditolak!");
+}
+
+
+$query = "
+SELECT 
+    si.id_pelaporan,
+    si.tgl_input,
+    si.lokasi,
+    si.ket,
+    si.nis,
+    sk.ket_kategori,
+    sa.status,
+    s.nama,
+    s.kelas
+FROM sarana_input_aspirasi si
+JOIN sarana_kategori sk ON si.id_kategori = sk.id_kategori
+JOIN sarana_siswa s ON si.nis = s.nis
+LEFT JOIN sarana_aspirasi sa ON si.id_pelaporan = sa.id_pelaporan
+ORDER BY si.tgl_input DESC
+";
+
+$result = mysqli_query($conn, $query);
+
 ?>
 
 <!DOCTYPE html>
@@ -38,9 +65,10 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
                     admin
                 </span>
             </div>
-            <a href="logout.php" class="dash-logout">
-                <i class="fas fa-power-off"><link rel="stylesheet" href="../logout.php"></i>
+            <a href="../logout.php" class="dash-logout">
+                <i class="fas fa-power-off"></i>
             </a>
+
         </div>
     </nav>
 
@@ -124,47 +152,69 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-status="Menunggu" data-tanggal="2026-02-09" data-kategori="Fasilitas Kelas">
-                            <td><span class="text-muted tgl-text" style="font-size: 13px;">09 Feb 2026</span></td>
-                            <td>
-                                <div class="fw-bold pelapor-nama">Budi Santoso</div>
-                                <div class="meta-id">2024001 • XII RPL 1</div>
-                            </td>
-                            <td><span class="category-badge">Fasilitas Kelas</span>
-                                <div class="mt-1 fw-bold text-uppercase" style="font-size: 11px;">Ruang 10</div>
-                            </td>
-                            <td><i class="text-muted">"AC Tidak Dingin..."</i></td>
-                            <td><span class="status-pill st-menunggu">Menunggu</span></td>
-                            <td class="text-center"><button class="btn-action btn-tanggapi">Tanggapi</button></td>
+                        <?php while($row = mysqli_fetch_assoc($result)): ?>
+
+                        <?php
+                        $status = $row['status'] ?? 'Menunggu';
+
+                        $statusClass = 'st-menunggu';
+                        if ($status == 'Proses') $statusClass = 'st-proses';
+                        if ($status == 'Selesai') $statusClass = 'st-selesai';
+                        ?>
+
+                        <tr 
+                        data-status="<?= $status; ?>" 
+                        data-tanggal="<?= $row['tgl_input']; ?>" 
+                        data-kategori="<?= htmlspecialchars($row['ket_kategori']); ?>">
+
+                        <td>
+                            <span class="text-muted tgl-text" style="font-size: 13px;">
+                                <?= date('d M Y', strtotime($row['tgl_input'])); ?>
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="fw-bold pelapor-nama">
+                                <?= htmlspecialchars($row['nama']); ?>
+                            </div>
+                            <div class="meta-id">
+                                <?= htmlspecialchars($row['nis']); ?> • <?= htmlspecialchars($row['kelas']); ?>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="category-badge">
+                                <?= htmlspecialchars($row['ket_kategori']); ?>
+                            </span>
+                            <div class="mt-1 fw-bold text-uppercase" style="font-size: 11px;">
+                                <?= htmlspecialchars($row['lokasi']); ?>
+                            </div>
+                        </td>
+
+                        <td>
+                            <i class="text-muted">
+                                "<?= htmlspecialchars($row['ket']); ?>"
+                            </i>
+                        </td>
+
+                        <td>
+                            <span class="status-pill <?= $statusClass; ?>">
+                                <?= $status; ?>
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <button class="btn-action btn-tanggapi"
+                                onclick="window.location.href='detail_pengaduan.php?id=<?= $row['id_pelaporan']; ?>'">
+                                Detail
+                            </button>
+                        </td>
+
                         </tr>
-                        <tr data-status="Proses" data-tanggal="2026-02-10" data-kategori="Fasilitas Kelas">
-                            <td><span class="text-muted tgl-text" style="font-size: 13px;">10 Feb 2026</span></td>
-                            <td>
-                                <div class="fw-bold pelapor-nama">Andi Wijaya</div>
-                                <div class="meta-id">2024005 • XII RPL 2</div>
-                            </td>
-                            <td><span class="category-badge">Fasilitas Kelas</span>
-                                <div class="mt-1 fw-bold text-uppercase" style="font-size: 11px;">Lab Komp</div>
-                            </td>
-                            <td><i class="text-muted">"Keyboard Rusak..."</i></td>
-                            <td><span class="status-pill st-proses">Proses</span></td>
-                            <td class="text-center"><button class="btn-action btn-tanggapi">Tanggapi</button></td>
-                        </tr>
-                        <tr data-status="Selesai" data-tanggal="2026-02-01" data-kategori="Alat Olahraga">
-                            <td><span class="text-muted tgl-text" style="font-size: 13px;">01 Feb 2026</span></td>
-                            <td>
-                                <div class="fw-bold pelapor-nama">Siti Aminah</div>
-                                <div class="meta-id">2024002 • XI MM</div>
-                            </td>
-                            <td><span class="category-badge">Alat Olahraga</span>
-                                <div class="mt-1 fw-bold text-uppercase" style="font-size: 11px;">Lap. Basket</div>
-                            </td>
-                            <td><i class="text-muted">"Ring basket copot..."</i></td>
-                            <td><span class="status-pill st-selesai">Selesai</span></td>
-                            <td class="text-center"><button class="btn-action btn-secondary" disabled>Detail</button>
-                            </td>
-                        </tr>
+
+                        <?php endwhile; ?>
                     </tbody>
+
                 </table>
             </div>
         </div>

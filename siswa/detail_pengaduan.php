@@ -67,10 +67,11 @@ $status = $data['status'] ?? 'Menunggu';
 
     <?php
     $status = $data['status'] ?? 'Menunggu';
-    $warna = 'bg-secondary';
 
-    if($status == 'Proses') $warna = 'bg-warning text-dark';
-    if($status == 'Selesai') $warna = 'bg-success';
+        $warna = 'status-menunggu';
+
+        if($status == 'Proses') $warna = 'status-proses';
+        if($status == 'Selesai') $warna = 'status-selesai';
     ?>
 
     <span class="badge <?= $warna; ?> badge-status">
