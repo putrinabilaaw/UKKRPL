@@ -21,9 +21,9 @@ if (isset($_POST['login'])) {
             $_SESSION['role']     = $data['role'];
 
             if ($data['role'] == 'admin') {
-                header("Location: admin_dashboard.php");
+                header("Location: admin/dashboard.php");
             } else {
-                header("Location: siswa_dashboard.php");
+                header("Location: siswa/dashboard.php");
             }
             exit;
 

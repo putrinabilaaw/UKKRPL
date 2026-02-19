@@ -1,0 +1,60 @@
+body{
+    background: rgba(0,0,0,0.05);
+}
+
+.detail-wrapper{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.detail-card{
+    width:100%;
+    max-width:600px;
+    border-radius:18px;
+    padding:25px;
+    position:relative;
+}
+
+.close-btn{
+    position:absolute;
+    top:15px;
+    right:18px;
+    font-size:20px;
+    text-decoration:none;
+    color:#888;
+}
+
+.close-btn:hover{
+    color:#000;
+}
+
+.badge-status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.img-wrapper{
+    background:#f4f6f9;
+    padding:10px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.img-preview{
+    max-height:320px;
+    max-width:100%;
+    object-fit:contain;
+}
+
+
+.section-title{
+    font-weight:600;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-size:14px;
+    color:#555;
+}

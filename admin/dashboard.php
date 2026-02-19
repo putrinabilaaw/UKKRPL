@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 ?>
@@ -18,7 +18,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -39,7 +39,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
                 </span>
             </div>
             <a href="logout.php" class="dash-logout">
-                <i class="fas fa-power-off"><link rel="stylesheet" href="logout.php"></i>
+                <i class="fas fa-power-off"><link rel="stylesheet" href="../logout.php"></i>
             </a>
         </div>
     </nav>
@@ -171,7 +171,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin') {
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/admin.js"></script>
+    <script src="../assets/js/admin.js"></script>
 </body>
 
 </html>
